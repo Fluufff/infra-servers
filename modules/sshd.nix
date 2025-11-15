@@ -1,7 +1,5 @@
-{ name, config, lib, pkgs, modulesPath, ... }:
-
-{
-  imports = [ ];
+{ name, config, lib, pkgs, modulesPath, ... }: {
+  imports = [];
 
   services.openssh = {
     enable = true;
@@ -21,9 +19,10 @@
 #    openFirewall = true;
   };
 
-  # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 666 6443 ];
   networking.firewall.allowedUDPPorts = [ ];
   networking.firewall.enable = true;
+
+  environment.etc."motd.d/ascii".source = ./ssh-banners;
 
 }

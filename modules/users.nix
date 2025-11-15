@@ -1,23 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
-
-{
-  imports = [ ];
-
-  users.users.jura = {
-    isNormalUser = true;
-    extraGroups = ["wheel"];
-    #openssh.authorizedKeys.keyFiles = [
-    #  /etc/nixos/github_ssh_keys/juravenator
-    #];
-  };
-  users.users.proko = {
-    isNormalUser = true;
-    extraGroups = ["wheel"];
-    # openssh.authorizedKeys.keys = [ "lala" ];
-    #openssh.authorizedKeys.keyFiles = [
-    #  /etc/nixos/github_ssh_keys/proko
-    #];
-  };
+{ config, lib, pkgs, modulesPath, ... }:let
+  mkUser = import ./make-user.nix { inherit lib pkgs; };
+in {
+  imports = [
+    (mkUser "jura" "https://github.com/juravenator.keys")
+    (mkUser "sirproko" "https://github.com/prokopyl.keys")
+  ];
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
