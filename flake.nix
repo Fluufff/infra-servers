@@ -13,6 +13,7 @@
       };
 
       test-vm = ./hosts/test-vm;
+      pawhost-next = ./hosts/pawhost-next;
     };
 
 

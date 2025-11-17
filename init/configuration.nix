@@ -6,7 +6,7 @@
 } @ args:
 {
   imports = [
-    ../hosts/test-vm/hardware-configuration.nix
+    ../hosts/pawhost-next/hardware-configuration.nix
     ../modules/systemd-boot.nix
     ../modules/cicd.nix
     ./disk-config.nix

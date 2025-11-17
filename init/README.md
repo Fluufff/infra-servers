@@ -43,10 +43,13 @@ On a linux install:
 
 - change `networking.hostId` in `hardware-configuration.nix` to match the output of `head -c 8 /etc/machine-id` on the target machine.  
   alternatively, this can be any random 8 character hex code.
-- change `disk-config.nix` to match the desired disk layout. In particular, the `/dev/sd.*` references.
+- change `init/disk-config.nix` to match the desired disk layout. In particular, the `/dev/sd.*` references.
 - in `hardware-configuration.nix`, rewrite the `fileSystem.*` entries to match the future disk layout. See other hosts for examples.
+- in `init/configuration.nix`, change the import of `hardware-configuration.nix` to the right host folder.
 
 ### 5. Run
+
+First, run `git add hosts/<name>`. 
 
 On your local machine, run:
 ```
@@ -56,4 +59,9 @@ nix-shell -p nixos-anywhere
 nixos-anywhere --flake .#generic root@<ip>
 # to nuke an existing host
 nixos-anywhere --flake .#generic -p 666 -i <key file> cicd@<ip>
+```
+
+You should be able to SSH to the host now using
+```shell
+ssh -p666 -o "IdentitiesOnly=yes" -i ci_key_ed25519 cicd@<ip>
 ```
