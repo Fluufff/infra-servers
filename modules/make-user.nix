@@ -14,6 +14,7 @@ in {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "daily";
+      OnBootSec = "1sec";
       Persistent = true;
       Unit = "${serviceName}.service";
     };
