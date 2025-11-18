@@ -18,7 +18,7 @@ The only thing you need is SSH root or sudo-passwordless access.
 
 ### 2. Populate the new host config
 
-Create new file `hosts/<name>/default.nix`, and add `<name>` in the host entries in `flake.nix`.
+Create files `hosts/<name>/default.nix`, `hosts/<name>/disk-config.nix`, `hosts/<name>/init.nix`, and add `<name>` in the host entries in `flake.nix`.
 Use the existing hosts for examples.
 
 ### 3. Generate hardware config
@@ -43,9 +43,8 @@ On a linux install:
 
 - change `networking.hostId` in `hardware-configuration.nix` to match the output of `head -c 8 /etc/machine-id` on the target machine.  
   alternatively, this can be any random 8 character hex code.
-- change `init/disk-config.nix` to match the desired disk layout. In particular, the `/dev/sd.*` references.
+- change `disk-config.nix` to match the desired disk layout. In particular, the `/dev/sd.*` references.
 - in `hardware-configuration.nix`, rewrite the `fileSystem.*` entries to match the future disk layout. See other hosts for examples.
-- in `init/configuration.nix`, change the import of `hardware-configuration.nix` to the right host folder.
 
 ### 5. Run
 
@@ -56,9 +55,9 @@ On your local machine, run:
 cd init
 nix-shell -p nixos-anywhere
 # on an uninitialized host
-nixos-anywhere --flake .#generic root@<ip>
+nixos-anywhere --flake .#<name> root@<ip>
 # to nuke an existing host
-nixos-anywhere --flake .#generic -p 666 -i <key file> cicd@<ip>
+nixos-anywhere --flake .#<name> -p 666 -i <key file> cicd@<ip>
 ```
 
 You should be able to SSH to the host now using

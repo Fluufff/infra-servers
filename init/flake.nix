@@ -11,15 +11,38 @@
       nixos-facter-modules,
       ...
     }:
-    {
-      nixosConfigurations.generic = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          disko.nixosModules.disko
-          ./configuration.nix
+      let
+        hosts = [
+          "pawhost-next"
+          "test-vm"
         ];
+      in {
+        nixosConfigurations =
+          builtins.listToAttrs (map
+            (name: {
+              name = name;
+              value = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                  disko.nixosModules.disko
+                  # (import ./hosts/${name} { inherit disko; })
+                  # ./configuration.nix
+                  # (import ../hosts/${name}/init.nix { inherit disko; })
+                  ../hosts/${name}/init.nix
+                ];
+              };
+            })
+            hosts
+          );
+        
+        system.stateVersion = "25.05";
       };
+      # nixosConfigurations.generic = nixpkgs.lib.nixosSystem {
+      #   system = "x86_64-linux";
+      #   modules = [
+      #     disko.nixosModules.disko
+      #     ./configuration.nix
+      #   ];
+      # };
 
-      system.stateVersion = "25.05";
-    };
 }

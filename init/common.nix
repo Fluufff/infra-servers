@@ -6,10 +6,8 @@
 } @ args:
 {
   imports = [
-    ../hosts/pawhost-next/hardware-configuration.nix
     ../modules/systemd-boot.nix
     ../modules/cicd.nix
-    ./disk-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
