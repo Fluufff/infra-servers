@@ -10,6 +10,8 @@
 
     imports = [
         ./hardware-configuration.nix
+        # IMPORTANT
+        # Ask Jorden to enable EFI boot on the instance.
         ../../modules/systemd-boot.nix
         ../../modules/basics.nix
         ../../modules/sshd.nix
