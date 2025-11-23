@@ -1,0 +1,103 @@
+##########
+# Setup
+##########
+col_size=15
+function bar() {
+  size=${3:-50}
+  ticks=$(($1*$size/$2))
+  if [[ $ticks -eq 0 ]]; then
+      ticks=1
+  fi
+  echo -n "["
+  if [[ $ticks -gt $((80*size/100)) ]]; then
+      echo -en "\e[0;31m"
+  elif [[ $ticks -gt $((60*size/100)) ]]; then
+      echo -en "\e[0;33m"
+  else
+      echo -en "\e[0;32m"
+  fi
+  for i in {0..$((size-1))}; do
+      if [[ $i -eq $ticks ]]; then
+          echo -en "\e[38;5;239m"
+      fi
+      echo -n "="
+  done
+  echo -e "\e[0m]"
+}
+##########
+
+##########
+# Banner
+##########
+f_banner="$(shuf -zen1 /etc/motd.d/banners/*)"
+lolcat --truecolor $f_banner
+echo ""
+
+##########
+# Memory
+##########
+memtotal=$(awk '/MemTotal/ { print $2 }' /proc/meminfo)
+memavail=$(awk '/MemAvailable/ { print $2 }' /proc/meminfo)
+printf %-${col_size}s "RAM"
+bar $((memtotal-memavail)) $memtotal
+if [[ $swaptotal -ne 0 ]]; then
+  printf %-${col_size}s "Swap"
+  swaptotal=$(awk '/SwapTotal/ { print $2 }' /proc/meminfo)
+  swapfree=$(awk '/SwapFree/ { print $2 }' /proc/meminfo)
+  bar $((swaptotal-swapfree)) $swaptotal
+fi
+##########
+
+##########
+# CPU
+##########
+printf %-${col_size}s "CPU"
+read cpu user nice system idle iowait irq softirq steal guest < /proc/stat
+cpu_use_1=$((user+system+nice+softirq+steal))
+cpu_total_1=$((cpu_use_1+idle+iowait))
+sleep '.1s'
+read cpu user nice system idle iowait irq softirq steal guest < /proc/stat
+cpu_use_2=$((user+system+nice+softirq+steal))
+cpu_total_2=$((cpu_use_2+idle+iowait))
+bar $((cpu_use_2-cpu_use_1)) $((cpu_total_2-cpu_total_1))
+##########
+
+##########
+# ZFS
+##########
+for zpool_name in $(zpool list -oname -H); do
+  printf %-${col_size}s "ZFS $zpool_name"
+  # echo -n "  $zpool_name "
+  zpool_status=$(zpool status -j $zpool_name | jq -r ".pools[\"$zpool_name\"].state")
+
+  if [[ "$zpool_status" == "ONLINE" ]]; then
+    json=$(zfs list -j --json-int $zpool_name | jq ".datasets[\"$zpool_name\"]")
+    used=$(echo "$json" | jq ".properties.used.value")
+    available=$(echo "$json" | jq ".properties.available.value")
+    bar $used $available
+  else
+    echo -e "\e[0;31m$zpool_status"
+  fi
+done
+
+##########
+# Systemd Services
+##########
+function svc() {
+  printf %-${col_size}s $1
+  svc_status=$(systemctl is-active $1)
+  if [[ $svc_status == "active" ]]; then
+    echo -en "[\e[0;32m"
+  else
+    echo -en "[\e[0;31m"
+  fi
+  echo -e "$svc_status\e[0m]"
+}
+svc "k3s"
+svc "fail2ban"
+svc "sshd"
+unset -f svc
+##########
+
+unset col_size
+unset -f bar

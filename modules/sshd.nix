@@ -22,7 +22,4 @@
   networking.firewall.allowedTCPPorts = [ 22 666 6443 ];
   networking.firewall.allowedUDPPorts = [ ];
   networking.firewall.enable = true;
-
-  environment.etc."motd.d/ascii".source = ./ssh-banners;
-
 }
