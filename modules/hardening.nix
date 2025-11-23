@@ -3,6 +3,11 @@
 {
   imports = [ ];
 
+  # Don't use nix channels.
+  # Instead of e.g. `nix-shell -p lolcat`,
+  # Use `nix shell nixpkgs#lolcat`.
+  nix.channel.enable = false;
+
   # hardening stuff
   # https://nixos.wiki/wiki/Security
   # https://ryanseipp.com/post/hardening-nixos/
