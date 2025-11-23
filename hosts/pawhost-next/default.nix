@@ -18,6 +18,7 @@
         ../../modules/cicd.nix
         ../../modules/users.nix
         ../../modules/hardening.nix
+        ../../modules/k3s.nix
     ];
 
     # This option defines the first version of NixOS you have installed on this particular machine,
