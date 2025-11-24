@@ -5,7 +5,7 @@ This repo is used to manage the NixOS servers maintained by Fluufff IT.
 ## Quick start
 
 - Check up on CI/CD sync jobs status:
-  TODO
+  See the [CICD docs](./docs/cicd.md).
 - Sync a specific server on the local machine:
   See the [manually syncing](./docs/manual-sync.md) docs.
 - Add a new server, or recommission an existing one:  
