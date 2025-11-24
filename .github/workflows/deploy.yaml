@@ -15,7 +15,7 @@ jobs:
     - name: Install Nix
       uses: DeterminateSystems/determinate-nix-action@v3.13.2
     - name: Setup SSH access
-      uses: webfactory/ssh-agent@v0.9.0
+      uses: webfactory/ssh-agent@v0.9.1
       with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
     - name: Colmena Apply
