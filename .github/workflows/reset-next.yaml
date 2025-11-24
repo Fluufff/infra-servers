@@ -1,0 +1,19 @@
+name: Reset-next
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reset:
+    environment: server
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Nix
+      uses: DeterminateSystems/determinate-nix-action@v3.13.2
+    - name: Kaboom
+      env:
+        SSH_KEY: ${{secrets.SSH_KEY}}
+      run: |
+        echo $SSH_KEY > ssh.key
+        nix-shell -p nixos-anywhere --rum "nixos-anywhere --flake .#pawhost-next -p 666 -i ssh.key cicd@77.90.16.190"
