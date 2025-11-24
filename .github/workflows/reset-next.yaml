@@ -11,11 +11,13 @@ jobs:
     - uses: actions/checkout@v6
     - name: Install Nix
       uses: DeterminateSystems/determinate-nix-action@v3.13.2
+    - name: Setup SSH access
+      uses: webfactory/ssh-agent@v0.9.1
+      with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
     - name: Kaboom
       env:
         SSH_KEY: ${{secrets.SSH_KEY}}
       run: |
         cd init
-        echo $SSH_KEY > ssh.key
-        chmod 0400 ssh.key
-        nix run nixpkgs#nixos-anywhere -- --flake .#pawhost-next -p 666 -i ssh.key cicd@77.90.16.190
+        nix run nixpkgs#nixos-anywhere -- --flake .#pawhost-next -p 666 cicd@77.90.16.190
