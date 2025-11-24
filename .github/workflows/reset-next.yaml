@@ -16,4 +16,5 @@ jobs:
         SSH_KEY: ${{secrets.SSH_KEY}}
       run: |
         echo $SSH_KEY > ssh.key
+        chmod 0400 ssh.key
         nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#pawhost-next -p 666 -i ssh.key cicd@77.90.16.190"
