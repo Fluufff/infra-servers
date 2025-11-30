@@ -101,3 +101,8 @@ unset -f svc
 
 unset col_size
 unset -f bar
+
+echo ""
+echo "New to NixOS?"
+echo "  NixOS & Flakes Book: https://nixos-and-flakes.thiscute.world"
+echo "  Nix Pills: https://nixos.org/guides/nix-pills/"
