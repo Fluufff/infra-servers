@@ -1,17 +1,23 @@
 { config, lib, pkgs, modulesPath, ... }:let
   mkUser = import ./make-user.nix { inherit lib pkgs; };
 in {
-  imports = [
-    (mkUser "jura" "https://github.com/juravenator.keys")
-    (mkUser "sirproko" "https://github.com/prokopyl.keys")
-  ];
-
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableBashCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+  };
   users.defaultUserShell = pkgs.zsh;
+
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" ];
+    custom = "$HOME/.oh-my-zsh/custom/";
+    theme = "powerlevel10k/powerlevel10k";
+  };
 
   environment.systemPackages = with pkgs; [
     lolcat
-    jq
   ];
 
   services.openssh = {
@@ -32,5 +38,20 @@ in {
       . /etc/update-motd.d/00-header
     fi
   '';
+
+  environment.etc."skel/.zshrc".text = ''
+    # Lines configured by zsh-newuser-install
+    HISTFILE=~/.zsh_history
+    HISTSIZE=1000
+    SAVEHIST=1000
+    setopt autocd extendedglob nomatch notify
+    bindkey -e
+    # End of lines configured by zsh-newuser-install
+  '';
+
+  imports = [
+    (mkUser "jura" "https://github.com/juravenator.keys")
+    (mkUser "sirproko" "https://github.com/prokopyl.keys")
+  ];
 
 }

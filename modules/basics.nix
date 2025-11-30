@@ -42,6 +42,8 @@
     vim
     htop
     curl
+    git
+    jq
   ];
 
   # Copy the NixOS configuration file and link it from the resulting system

@@ -1,4 +1,4 @@
-{ name, nodes, pkgs, lib, inputs, ... }: {
+{ name, nodes, pkgs, lib, ... }: {
 
     deployment = {
         # targetHost = "${name}.infra.fluufff.org";
