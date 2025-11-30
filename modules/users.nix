@@ -13,7 +13,8 @@ in {
     enable = true;
     plugins = [ "git" ];
     custom = "$HOME/.oh-my-zsh/custom/";
-    theme = "powerlevel10k/powerlevel10k";
+    # theme = "powerlevel10k/powerlevel10k";
+    theme = "bureau";
   };
 
   environment.systemPackages = with pkgs; [
