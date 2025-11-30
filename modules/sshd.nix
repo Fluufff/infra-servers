@@ -16,10 +16,9 @@
   services.endlessh = {
     enable = true;
     port = 22;
-#    openFirewall = true;
   };
 
-  networking.firewall.allowedTCPPorts = [ 22 666 6443 ];
+  networking.firewall.allowedTCPPorts = [ 22 666 ];
   networking.firewall.allowedUDPPorts = [ ];
   networking.firewall.enable = true;
 }
