@@ -51,7 +51,7 @@ On a linux install:
 First, run `git add hosts/<name>`. 
 
 On your local machine, run:
-```
+```shell
 cd init
 nix-shell -p nixos-anywhere
 # on an uninitialized host

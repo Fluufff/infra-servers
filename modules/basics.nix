@@ -44,10 +44,28 @@
     curl
     git
     jq
+    net-tools
   ];
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
   #system.copySystemConfiguration = true;
+
+  # Disaster recovery option.
+  # Keep the very first generation (should be from running the code in ../init).
+  systemd.services.preserve-initial-system-generation = {
+    description = "Ensure first NixOS system generation is pinned";
+    after = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    script = ''
+      if [ ! -e /nix/var/nix/profiles/system-initial ]; then
+        GEN=$(ls -1 /nix/var/nix/profiles/ | grep 'system-[0-9]*-link' | head -n1)
+        ln -s "$GEN" /nix/var/nix/profiles/system-initial
+      fi
+    '';
+  };
 }
