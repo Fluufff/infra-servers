@@ -1,8 +1,8 @@
 { name, nodes, pkgs, lib, ... }: {
 
     deployment = {
-        # targetHost = "${name}.infra.fluufff.org";
-        targetHost = "77.90.16.190";
+        targetHost = "test.pawhost.fluufff.org";
+        # targetHost = "77.90.16.190";
         targetPort = 666;
         targetUser = "cicd";
         buildOnTarget = true;
