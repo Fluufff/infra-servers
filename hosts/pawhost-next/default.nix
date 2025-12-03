@@ -10,6 +10,7 @@
 
     imports = [
         ./hardware-configuration.nix
+        ../../modules/zfs-fix.nix
         # IMPORTANT
         # Ask Jorden to enable EFI boot on the instance.
         ../../modules/systemd-boot.nix
