@@ -1,5 +1,13 @@
 { name, config, lib, pkgs, modulesPath, ... }:
 
+let
+  argocd-crds = pkgs.fetchFromGitHub {
+    owner = "argoproj";
+    repo = "argo-cd";
+    rev = "v3.2.1";
+    sha256 = "sha256-AkHGhRHd2ybGYdgy6rNGBdS5YaHZKL4M9oKdqPxWYO0=";
+  };
+in
 {
   imports = [ ];
 
@@ -10,6 +18,12 @@
     disable = [
       "traefik" # we maintain our own version
     ];
+
+    manifests = {
+      crd-application.source = "${argocd-crds}/manifests/crds/application-crd.yaml";
+      crd-applicationset.source = "${argocd-crds}/manifests/crds/applicationset-crd.yaml";
+      crd-appproject.source = "${argocd-crds}/manifests/crds/appproject-crd.yaml";
+    };
 
     autoDeployCharts.traefik2 = {
       repo = "https://traefik.github.io/charts";
@@ -153,6 +167,9 @@
         global = {
           domain = "argocd.next.fluufff.org";
         };
+        crds = {
+          install = false;
+        };
         configs = {
           params = {
             "server.insecure" = "true";
@@ -204,6 +221,37 @@
             enabled = true;
           };
         };
+        extraObjects = [
+          {
+            apiVersion = "argoproj.io/v1alpha1";
+            kind = "Application";
+            metadata = {
+              name = "infra";
+              namespace = "argocd";
+            };
+            spec = {
+              project = "default";
+
+              source = {
+                repoURL = "https://github.com/Fluufff/infra-argocd.git";
+                targetRevision = "next";
+                path = "manifests";
+              };
+
+              destination = {
+                server = "https://kubernetes.default.svc";
+                namespace = "argocd";
+              };
+
+              syncPolicy = {
+                automated = {
+                  prune = true;
+                  selfHeal = true;
+                };
+              };
+            };
+          }
+        ];
       };
     };
   };
