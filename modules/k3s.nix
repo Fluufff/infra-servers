@@ -186,6 +186,8 @@ in
                   clientID: $oidc.google.clientID
                   clientSecret: $oidc.google.clientSecret
                   insecureSkipVerify: true
+                  userIDKey: email
+                  userNameKey: email
                 type: oidc
                 id: google
                 name: Google
@@ -205,6 +207,10 @@ in
               p, role:operator, applications, sync, *, allow
               p, role:operator, applications, get, *, allow
               p, role:operator, applicationsets, get, *, allow
+              p, role:operator, projects, get, *, allow
+              p, role:operator, clusters, get, *, allow
+              p, role:operator, repositories, get, *, allow
+              p, role:operator, logs, get, *, allow
 
               g, it@fluufff.org, role:admin
               g, juravenator@fluufff.org, role:admin
