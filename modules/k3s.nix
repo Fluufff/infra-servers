@@ -11,9 +11,19 @@ in
 {
   imports = [ ];
 
+  environment.systemPackages = with pkgs; [
+    kubernetes-helm
+  ];
+
   services.k3s = {
     enable = true;
     role = "server";
+    nodeName = name;
+
+    # # $ zfs create -o mountpoint=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.zfs <zpool name>/containerd
+    # extraFlags = [
+    #   "--snapshotter=zfs"
+    # ];
 
     disable = [
       "traefik" # we maintain our own version
@@ -241,7 +251,7 @@ in
               source = {
                 repoURL = "https://github.com/Fluufff/infra-argocd.git";
                 targetRevision = "next";
-                path = "manifests";
+                path = "applications";
               };
 
               destination = {
@@ -258,6 +268,60 @@ in
             };
           }
         ];
+      };
+    };
+
+    autoDeployCharts.openebs = {
+      repo = "https://openebs.github.io/openebs";
+      name = "openebs";
+      version = "4.4.0";
+      hash = "sha256-mrxD80vqkPh2NcBzDYz/b0I1WUp2GJirBmbdgSQB5cg=";
+      targetNamespace = "openebs";
+      createNamespace = true;
+      values = {
+        engines = {
+          replicated = {
+            mayastor = {
+              enabled = false;
+            };
+          };
+          local = {
+            lvm = {
+              enabled = false;
+            };
+          };
+        };
+        loki = {
+          enabled = false;
+        };
+        minio = {
+          enabled = false;
+        };
+        alloy = {
+          enabled = false;
+        };
+        # localpv-provisioner = {
+        #   # localpv = {
+        #   #   enabled = false;
+        #   # };
+        # };
+        zfs-localpv = {
+          # crds = {
+          #   csi = {
+          #     volumeSnapshots = {
+          #       enabled = true;
+          #     }
+          #   };
+          # };
+          zfs = {
+            bin = "/run/current-system/sw/bin/zfs";
+          };
+        };
+        # lvm-localpv = {
+        #   crds = {
+        #     enabled = false;
+        #   }
+        # };
       };
     };
   };

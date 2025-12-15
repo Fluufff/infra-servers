@@ -40,10 +40,14 @@
         mountpoint = "/";
 
         datasets = {
-          data = {
+          "data" = {
             type = "zfs_fs";
-            mountpoint = "/data";
+            # mountpoint = "/data";
             # options."com.sun:auto-snapshot" = "true";
+          };
+          "data/k8s-pv" = {
+            type = "zfs_fs";
+            mountpoint 
           };
         };
       };
