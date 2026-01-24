@@ -36,10 +36,14 @@ echo ""
 ##########
 # Memory
 ##########
+# https://stackoverflow.com/a/41251290
 memtotal=$(awk '/MemTotal/ { print $2 }' /proc/meminfo)
-memavail=$(awk '/MemAvailable/ { print $2 }' /proc/meminfo)
+memfree=$(awk '/MemFree/ { print $2 }' /proc/meminfo)
+membuffers=$(awk '/Buffers/ { print $2 }' /proc/meminfo)
+memcached=$(awk '/Cached/ { print $2 }' /proc/meminfo)
+memsreclaimable=$(awk '/SReclaimable/ { print $2 }' /proc/meminfo)
 printf %-${col_size}s "RAM"
-bar $((memtotal-memavail)) $memtotal
+bar $((memtotal-memfree-membuffers-memcached-memsreclaimable)) $memtotal
 if [[ $swaptotal -ne 0 ]]; then
   printf %-${col_size}s "Swap"
   swaptotal=$(awk '/SwapTotal/ { print $2 }' /proc/meminfo)
