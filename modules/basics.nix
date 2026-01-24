@@ -62,7 +62,7 @@
       Type = "oneshot";
     };
     script = ''
-      if [ ! -e /nix/var/nix/profiles/system-initial ]; then
+      if [ ! -L /nix/var/nix/profiles/system-initial ]; then
         GEN=$(ls -1 /nix/var/nix/profiles/ | grep 'system-[0-9]*-link' | head -n1)
         ln -s "$GEN" /nix/var/nix/profiles/system-initial
       fi
