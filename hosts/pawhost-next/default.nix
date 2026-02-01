@@ -21,6 +21,7 @@
         ../../modules/hardening.nix
         ../../modules/k3s.nix
         ../../modules/zerotier.nix
+        ../../modules/zfs-sanoid.nix
     ];
 
     # This option defines the first version of NixOS you have installed on this particular machine,
