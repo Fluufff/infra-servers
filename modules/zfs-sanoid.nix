@@ -56,6 +56,8 @@
     };
   };
 
+  # `zfs mount -a` needs to run on the remote host for this command to
+  # consider itself successful, even though all data was transferred.
   services.syncoid = {
     enable = true;
     interval = "*-*-* *:00:00";
@@ -65,6 +67,19 @@
         recursive = true;
       };
     };
-    sshKey = /data/syncoid.key;
+    sshKey = /data/syncoid/syncoid.key;
+    service = {
+      serviceConfig = {
+        BindReadOnlyPaths = [
+          "/data/syncoid"
+        ];
+      };
+    };
+  };
+
+  services.openssh = {
+    knownHosts = {
+      "192.168.193.19".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJQzfnDaiVk1fyA+FA6LyKf5Y4N/AsFs+Lc3q8rIwxt";
+    };
   };
 }
