@@ -55,4 +55,16 @@
         };
     };
   };
+
+  services.syncoid = {
+    enable = true;
+    interval = "*-*-* *:00:00";
+    commands = {
+      "zroot/data" = {
+        target = "pawhost-test@192.168.193.19:speedy1/fluufff/test.pawhost.fluufff.org/data";
+        recursive = true;
+      };
+    };
+    sshKey = /data/syncoid.key;
+  };
 }
