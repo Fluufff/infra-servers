@@ -24,6 +24,27 @@
     };
   };
 
+  systemd.timers.platyplus-send-reminder = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      OnBootSec = "1sec";
+      Unit = "platyplus-send-reminder.service";
+    };
+  };
+
+  systemd.services.platyplus-send-reminder = {
+    script = ''
+      #!/usr/bin/env bash
+      set -o errexit -o nounset -o pipefail
+      IFS=$'\n\t\v'
+      ${pkgs.k3s}/bin/kubectl -n platyplus exec -it deploy/platyplus -- php index.php Cronjob action/SecretCronJob/account
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
+
   systemd.timers.platyplus-sql-backup = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
