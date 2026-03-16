@@ -23,4 +23,25 @@
       Type = "oneshot";
     };
   };
+
+  systemd.timers.platyplus-sql-backup = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "1h";
+      OnUnitActiveSec = "1h";
+      Unit = "platyplus-sql-backup.service";
+    };
+  };
+
+  systemd.services.platyplus-sql-backup = {
+    script = ''
+      #!/usr/bin/env bash
+      set -o errexit -o nounset -o pipefail
+      IFS=$'\n\t\v'
+      ${pkgs.k3s}/bin/kubectl -n platyplus exec -it deploy/mariadb -- mariadb-dump -u root "-pExtruding-Tibia7-Colt" --lock-tables fluufff > /data/platyplus/sql-backups/mariadb-dump-next-$(date "+%Y-%m-%d-%H-%M-%S").sql
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
 }
