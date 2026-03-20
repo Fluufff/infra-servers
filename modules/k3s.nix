@@ -226,6 +226,7 @@ in
               g, juravenator@fluufff.org, role:admin
               g, proko@fluufff.org, role:admin
               g, niki@fluufff.org, role:operator
+              g, julieiraes@fluufff.org, role:operator
               '';
           };
           secret = {
