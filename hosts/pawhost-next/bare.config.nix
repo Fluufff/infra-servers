@@ -47,6 +47,12 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
+  users.users.julie = {
+    isNormalUser = true;
+    description = "Julie";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
