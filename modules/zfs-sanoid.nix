@@ -11,6 +11,7 @@
     };
     before = ["sanoid.service"];
   };
+  # zfs list -r -o 'name,used,k8s:namespace,k8s:name' zroot/data/k8s-pv
   systemd.services.zfs-pvc-labels = {
     script = ''
       #!/usr/bin/env bash
