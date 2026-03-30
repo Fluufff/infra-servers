@@ -70,6 +70,7 @@
     };
     commonArgs = [
       "--no-sync-snap"
+      "--sshport=666"
     ];
     sshKey = /data/syncoid/syncoid.key;
     service = {
