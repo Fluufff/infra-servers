@@ -64,7 +64,7 @@
     interval = "*-*-* *:00:00";
     commands = {
       "zroot/data" = {
-        target = "pawhost-test@192.168.193.92:speedy1/fluufff/test.pawhost.fluufff.org/data";
+        target = "pawhost-test@192.168.193.92:hot-1/replicas/test.pawhost.fluufff.org/data";
         recursive = true;
       };
     };
