@@ -68,6 +68,9 @@
         recursive = true;
       };
     };
+    commonArgs = [
+      "--no-sync-snap"
+    ];
     sshKey = /data/syncoid/syncoid.key;
     service = {
       serviceConfig = {
