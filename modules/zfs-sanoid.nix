@@ -64,7 +64,7 @@
     interval = "*-*-* *:00:00";
     commands = {
       "zroot/data" = {
-        target = "pawhost-test@192.168.193.19:speedy1/fluufff/test.pawhost.fluufff.org/data";
+        target = "pawhost-test@192.168.193.92:speedy1/fluufff/test.pawhost.fluufff.org/data";
         recursive = true;
       };
     };
@@ -83,7 +83,7 @@
 
   services.openssh = {
     knownHosts = {
-      "192.168.193.19".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJQzfnDaiVk1fyA+FA6LyKf5Y4N/AsFs+Lc3q8rIwxt";
+      "192.168.193.92".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJQzfnDaiVk1fyA+FA6LyKf5Y4N/AsFs+Lc3q8rIwxt";
     };
   };
 }
