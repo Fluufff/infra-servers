@@ -3,6 +3,27 @@
 {
   imports = [ ];
 
+  systemd.timers.platyplus-main-gen-invoice = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5m";
+      OnUnitActiveSec = "5m";
+      Unit = "platyplus-main-gen-invoice.service";
+    };
+  };
+
+  systemd.services.platyplus-main-gen-invoice = {
+    script = ''
+      #!/usr/bin/env bash
+      set -o errexit -o nounset -o pipefail
+      IFS=$'\n\t\v'
+      ${pkgs.k3s}/bin/kubectl -n platyplus-main exec -it deploy/platyplus -- php index.php Cronjob action/SecretCronJob/invoice
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
+
   systemd.timers.platyplus-next-clean-cart = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
