@@ -38,8 +38,8 @@ in
     autoDeployCharts.traefik2 = {
       repo = "https://traefik.github.io/charts";
       name = "traefik";
-      version = "37.4.0";
-      hash = "sha256-BIGagu9qqQ7ijloBJp5bRBQUnVhcO8k4tmr6ZNx4pZU=";
+      version = "39.0.5";
+      hash = "sha256-LWl7boE85UG4Is7POi/2/LlzImDS+z56lzc4iqOb8vU=";
       targetNamespace = "traefik";
       createNamespace = true;
 
