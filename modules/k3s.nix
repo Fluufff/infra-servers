@@ -51,6 +51,19 @@ in
           "--certificatesresolvers.letsencrypt.acme.httpChallenge.entryPoint=web"
           "--certificatesresolvers.letsencrypt.acme.storage=/data/acme.json"
         ];
+        ports = {
+          web = {
+            http = {
+              redirections = {
+                entryPoint = {
+                  to = "websecure";
+                  scheme = "https";
+                  permanent = false;
+                };
+              };
+            };
+          };
+        };
         ingressRoute = {
           dashboard = {
             enabled = true;
