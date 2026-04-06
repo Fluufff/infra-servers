@@ -21,6 +21,9 @@ in
     enable = true;
     role = "server";
     nodeName = name;
+    extraFlags = [
+      "--tls-san=${config.deployment.targetHost}"
+    ];
 
     # # $ zfs create -o mountpoint=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.zfs <zpool name>/containerd
     # extraFlags = [
