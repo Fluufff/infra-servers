@@ -234,6 +234,7 @@ in
             "policy.csv" = ''
               p, role:operator, applications, sync, *, allow
               p, role:operator, applications, get, *, allow
+              p, role:operator, applications, action/*, default/*, allow
               p, role:operator, applicationsets, get, *, allow
               p, role:operator, projects, get, *, allow
               p, role:operator, clusters, get, *, allow
