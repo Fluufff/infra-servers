@@ -242,9 +242,13 @@ in
 
               g, it@fluufff.org, role:admin
               g, juravenator@fluufff.org, role:admin
-              g, proko@fluufff.org, role:admin
+              g, proko@fluufff.org, role:operator
               g, niki@fluufff.org, role:operator
               g, julieiraes@fluufff.org, role:operator
+              g, quezler@fluufff.org, role:operator
+              g, annelies@fluufff.org, role:operator
+              g, snuggly.ghost@fluufff.org, role:operator
+              g, jorden@fluufff.org, role:operator
               '';
           };
           secret = {
