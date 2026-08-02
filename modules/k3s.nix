@@ -276,6 +276,11 @@ in
                 repoURL = "https://github.com/Fluufff/infra-argocd.git";
                 targetRevision = "next";
                 path = "applications";
+                helm = {
+                  valueFiles = [
+                    ("hosts/" + name + "/values.yaml")
+                  ];
+                };
               };
 
               destination = {
