@@ -285,7 +285,8 @@ in
 
               syncPolicy = {
                 automated = {
-                  prune = true;
+                  enabled = false;
+                  prune = false;
                   selfHeal = true;
                 };
               };
