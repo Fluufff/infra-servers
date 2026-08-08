@@ -8,7 +8,7 @@ jobs:
     environment: server
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Install Nix
       uses: DeterminateSystems/determinate-nix-action@v3.17.2
     - name: Setup SSH access
