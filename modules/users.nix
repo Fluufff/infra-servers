@@ -1,6 +1,14 @@
-{ config, lib, pkgs, modulesPath, ... }:let
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
+let
   mkUser = import ./make-user.nix { inherit lib pkgs; };
-in {
+in
+{
   programs.zsh = {
     enable = true;
     enableBashCompletion = true;
@@ -52,7 +60,6 @@ in {
 
   imports = [
     (mkUser "jura" "https://github.com/juravenator.keys")
-    (mkUser "sirproko" "https://github.com/prokopyl.keys")
     (mkUser "julie" "https://github.com/furryjulie.keys")
   ];
 
