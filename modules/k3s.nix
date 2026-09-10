@@ -80,6 +80,11 @@ in
             }];
           };
         };
+        providers = {
+          kubernetesCRD = {
+            allowCrossNamespace = true;
+          };
+        };
         extraObjects = [
           {
             apiVersion = "traefik.io/v1alpha1";
